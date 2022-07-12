@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  reverseproxy:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "443:443" 
+      - "80:80" 
+    restart: always
+
+  portal:
+    depends_on:
+      - reverseproxy 
+    build:
+      context: .
+      dockerfile: portal/Dockerfile      
+    ports:
+      - "5001:5001"  
+    restart: always
